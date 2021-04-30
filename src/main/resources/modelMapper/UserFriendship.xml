@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
     <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserFriendship">
-<!--resultMap id="BaseResultMap" type="com.qkl.tfcc.api.po.user.User" >
+<!--resultMap id="BaseResultMap" type="com.qkl.ztysl.api.po.user.User" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_code" property="userCode" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
@@ -20,48 +20,48 @@
     <result column="phone" property="phone" jdbcType="VARCHAR" />    
   </resultMap> -->
   
-    <select id="findIsExist" parameterType="java.lang.String" resultType="java.lang.Integer" >
+    <select id="findIsExist" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
 		select count(1) cnt
-        from tb_user_friendship  where recomuser_code = #{recomusercode} 
+        from user_friendship  where recomuser_id = #{recomuserId} 
 	</select> 
 
-    <select id="findUpFriendshipByPhone" parameterType="java.lang.String" resultType="UserFriendship" >
+    <select id="findUpFriendshipByRecomuserid" parameterType="java.lang.Integer" resultType="UserFriendship" >
 		select id,
-		user_code userCode,
-		recomuser_code recomuserCode,
+		user_id userId,
+		recomuser_id recomuserId,
 		rela_level relaLevel,
 		user_type userType,
 		calflag calflag,
 		syscode syscode,
 		create_time createTime,
-		modify_time modifyTime		
-        from tb_user_friendship   
+		modify_time modifyTime	
+        from user_friendship   
         where   rela_level='A'  
-		and recomuser_code = #{recomusercode} 
+		and recomuser_id = #{recomuserId} 
 	</select> 
 	
-	  <select id="findMaxFriendshipByPhone" parameterType="java.lang.String" resultType="UserFriendship" >
+	  <select id="findMaxFriendshipByRecomuserid" parameterType="java.lang.Integer" resultType="UserFriendship" >
 		select id,
-		user_code userCode,
-		recomuser_code recomuserCode,
+		user_id userId,
+		recomuser_id recomuserId,
 		rela_level relaLevel,
 		user_type userType,
 		calflag calflag,
 		syscode syscode,
 		create_time createTime,
 		modify_time modifyTime		
-        from tb_user_friendship   
+        from user_friendship   
         where id in (
-		select max(id) from tb_user_friendship where 
-		recomuser_code = #{recomusercode})
+		select max(id) from user_friendship where 
+		recomuser_id = #{recomuserId} )
 	</select> 
 	
 	
-	<insert id="add" parameterType="com.qkl.tfcc.api.po.user.UserFriendship" >
-	 insert into tb_user_friendship (user_code,recomuser_code,rela_level,user_type,calflag,syscode,create_time,modify_time)
+	<insert id="add" parameterType="com.qkl.ztysl.api.po.user.UserFriendship" >
+	 insert into user_friendship (user_id,recomuser_id,rela_level,user_type,calflag,syscode,create_time,modify_time)
 	 values(
-	 #{userCode},
-	 #{recomuserCode},
+	 #{userId},
+	 #{recomuserId},
 	 #{relaLevel},
 	 #{userType},
 	 #{calflag},
@@ -71,19 +71,19 @@
 	 )	 
 	 </insert>
 	
-	  <update id="updatecalflag" parameterType="com.qkl.tfcc.api.po.user.UserFriendship" >    
-	     update tb_user_friendship 
+	  <update id="updatecalflag" parameterType="com.qkl.ztysl.api.po.user.UserFriendship" >    
+	     update user_friendship 
 	     set calflag = #{calflag},
 	          modify_time = #{modifyTime}
-	     where recomuser_code = #{recomuserCode}     
-	          and user_code = #{userCode}  
+	     where recomuser_id = #{recomuserId}     
+	          and user_id = #{userId}  
 	          and syscode = #{syscode}   
      </update>
      <select id="isFriend" parameterType="pd" resultType="pd">
-        select * from tb_user_friendship 
+        select * from user_friendship 
         where 1=1 
-        and user_code = #{user_code}
-        and recomuser_code = #{recomuser_code}
+        and user_id = #{user_id}
+        and recomuser_id = #{recomuser_id}
         and syscode = #{syscode}   
      </select>
     

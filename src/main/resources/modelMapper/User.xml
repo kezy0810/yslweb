@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
     <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="User">
-   <resultMap id="BaseResultMap" type="com.qkl.tfcc.api.po.user.User" >
+   <resultMap id="BaseResultMap" type="com.qkl.ztysl.api.po.user.User" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_code" property="userCode" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
@@ -40,7 +40,7 @@
         from tb_user  where user_code = #{userCode}
     </select> 
 	
-	<insert id="add" parameterType="com.qkl.tfcc.api.po.user.User" >
+	<insert id="add" parameterType="com.qkl.ztysl.api.po.user.User" >
 	 insert into tb_user (user_code,phone,pwdhash,user_type,reg_time,status,create_time,modify_time)
 	 values(
 	 #{userCode},
@@ -61,13 +61,7 @@
 	          modify_time = #{modify_time}
 	     where phone = #{phone}     
      </update>
-     
-     <update id="updatepwd" parameterType="java.util.Map" >    
-	     update tb_user 
-	     set pwdhash = #{pwdhash},
-	          modify_time = #{modify_time}
-	     where phone = #{phone}     
-     </update>
+
      <update id="updatepwdByUserCode" parameterType="java.util.Map" >    
          update tb_user 
          set pwdhash = #{pwdhash},

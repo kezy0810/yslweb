@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="qkl_tfcc_web">
+    <wb-module deploy-name="/">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="qkl_tfcc_api-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/qkl_tfcc_api/qkl_tfcc_api">
+        <dependent-module archiveName="qkl_ztysl_api-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/qkl_ztysl_api/qkl_ztysl_api">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="qkl_util-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/qkl_util/qkl_util">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="/"/>
-        <property name="java-output-path" value="/qkl_tfcc_web/target/classes"/>
+        <property name="java-output-path" value="/qkl_ymd_web/target/classes"/>
     </wb-module>
 </project-modules>

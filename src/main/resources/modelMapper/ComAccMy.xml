@@ -2,7 +2,7 @@
     <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ComAccMy">
 
-     <!-- 查询TFCC余额 -->
+     <!-- 查.ztysl.额 -->
     <select id="findTB" parameterType="java.lang.String" resultType="java.math.BigDecimal" >
 		        <!-- select sum(amnt) tfcc
 		        from tb_acc_def d , tb_acc_detail a 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>TFCC</display-name>
-  <description>tfcc web application </description>
+  <display-name>ztysl</display-name>
+  <description>ztysl web application </description>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext*.xml</param-value>
@@ -65,7 +65,7 @@
 	
 	<filter>
         <filter-name>CrossOrigin</filter-name>
-        <filter-class>com.qkl.tfcc.filter.CrossOriginFilter</filter-class>    
+        <filter-class>com.qkl.ztysl.filter.CrossOriginFilter</filter-class>    
     </filter>
     <filter-mapping>
         <filter-name>CrossOrigin</filter-name>
@@ -73,21 +73,28 @@
     </filter-mapping>
 	
 	
-	 <!-- <filter>
+	 <filter>
     	<filter-name>loginFilter</filter-name>
-    	<filter-class>com.qkl.tfcc.filter.LoginFilter</filter-class>
+    	<filter-class>com.qkl.ztysl.filter.LoginFilter</filter-class>
   	</filter>
  	<filter-mapping>
    		<filter-name>loginFilter</filter-name>
     	<url-pattern>/service/*</url-pattern>  
-  	</filter-mapping> -->
-  	
+  	</filter-mapping> 
+  
+	 <filter>
+    	<filter-name>mappFilter</filter-name>
+    	<filter-class>com.qkl.ztysl.filter.MappFilter</filter-class>
+  	</filter>
+ 	<filter-mapping>
+   		<filter-name>mappFilter</filter-name>
+    	<url-pattern>/mserver/*</url-pattern>  
+  	</filter-mapping>   	
 
 	<welcome-file-list>
 		<!-- welcome-file>view/index.jsp</welcome-file> -->
 		<!-- welcome-file>view/login.jsp</welcome-file> -->
-		<welcome-file>view/login.html</welcome-file>
-		<welcome-file>view/register.html</welcome-file>
+		<welcome-file>view/404.html</welcome-file>
 	</welcome-file-list>
 	<error-page>
 		<exception-type>java.lang.Throwable</exception-type>

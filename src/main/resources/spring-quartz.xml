@@ -15,10 +15,10 @@
 
 	<task:annotation-driven />
     <!--  <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
-	<context:component-scan base-package="com.qkl.tfcc.quartz.job" /> -->
+	<context:component-scan base-package="com.qkl.ymd.quartz.job" /> -->
 <!--     <context:annotation-config/>   -->
        <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>  
-<!--      <context:component-scan base-package="com.qkl.tfcc.quartz.job"/> -->
+<!--      <context:component-scan base-package="com.qkl.ymd.quartz.job"/> -->
     
     
     <!-- 1、Scheduler的配置 -->
@@ -43,7 +43,7 @@
         是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程  
     </bean>
     4、业务类的配置  
-    <bean id="thawJob" class="com.qkl.tfcc.quartz.job.ThawJob"/> -->
+    <bean id="thawJob" class="com.qkl.ymd.quartz.job.ThawJob"/> -->
 </beans>
 
 

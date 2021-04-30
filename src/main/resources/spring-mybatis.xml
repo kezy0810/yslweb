@@ -9,9 +9,9 @@
 	<!-- 配置数据源 -->
 	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
-		<property name="url" value="${tfcc.jdbc.url}" />
-		<property name="username" value="${tfcc.jdbc.username}" />
-		<property name="password" value="${tfcc.jdbc.password}" />
+		<property name="url" value="${ztysl.jdbc.url}" />
+		<property name="username" value="${ztysl.jdbc.username}" />
+		<property name="password" value="${ztysl.jdbc.password}" />
 		<property name="initialSize" value="1" />
 		<property name="maxActive" value="20" />
 		<property name="minIdle" value="1" />
@@ -32,7 +32,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- <property name="mapperLocations" value="classpath:sysmybatis/*Mapper.xml"/> -->
-		<property name="configLocation" value="classpath:tfcc-mybatis-config.xml" />
+		<property name="configLocation" value="classpath:ztysl-mybatis-config.xml" />
 	</bean>
 
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
@@ -41,8 +41,8 @@
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-<!-- 		<property name="basePackage" value="com.yc.dc.tfcc.provider.dao" /> -->
-		<property name="basePackage" value="com.qkl.tfcc.provider.*.impl" />
+<!-- 		<property name="basePackage" value="com.yc.dc.ztysl.provider.dao" /> -->
+		<property name="basePackage" value="com.qkl.ztysl.provider.*.impl" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	<!-- 扫描dao所在的包 -->
@@ -76,7 +76,7 @@
 	</tx:advice>
 	<aop:config>
 		<aop:pointcut id="transactionPointcut"
-			expression="execution(* com.qkl.tfcc.provider.*.*(..))" />
+			expression="execution(* com.qkl.ztysl.provider.*.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointcut"
 			advice-ref="transactionAdvice" />
 	</aop:config>-->
@@ -90,7 +90,7 @@
 		scope="prototype">
 		<property name="patterns">
 			<list>
-				<value>com.qkl.tfcc.provider.*</value>
+				<value>com.qkl.ztysl.provider.*</value>
 			</list>
 
 		</property>

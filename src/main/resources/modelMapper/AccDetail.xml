@@ -5,21 +5,41 @@
   
    
     
-    <insert id="addAccDetail" parameterType="com.qkl.tfcc.api.po.acc.AccDetail" >
-     insert into tb_acc_detail (user_code,sub_accno,bouns_source1,bouns_source2,rela_usercode,
-     rela_userlevel,amnt,caldate,cntflag,`status`,syscode,create_time,modify_time,operator)
+    <insert id="addAccDetail" parameterType="com.qkl.ztysl.api.po.acc.AccDetail" >
+     insert into tb_acc_detail (
+     user_id,
+	 acc_no,
+	 bouns_source,
+	 rela_userid,
+	 rela_userlevel,
+	 amnt,
+	 caldate,
+	 cntflag,
+	 `status`,
+	 syscode,
+	 otherno,
+	 other_amnt,
+	 other_source,
+	 bsrate,
+	 create_time,
+	 modify_time,
+	 operator
+     )
      values(
-     #{userCode},
-     #{subAccno},
-     #{bounsSource1},
-     #{bounsSource2},
-     #{relaUsercode},
+     #{userId},
+     #{accNo},
+     #{bounsSource},
+     #{relaUserId},
      #{relaUserlevel},
      #{amnt},
      #{caldate},
      #{cntflag},
      #{status},
-     #{syscode},   
+     #{syscode},  
+     #{otherno},
+	 #{otherAmnt},
+	 #{otherSource},
+	 #{bsrate},     
      #{createTime},
      #{modifyTime},
      #{operator}
@@ -91,7 +111,125 @@
      
      </insert>
      
-     <update id="updateAccDetail" parameterType="com.qkl.tfcc.api.po.acc.AccDetail">
+     
+     <insert id="addselftask" parameterType="pd" >
+     INSERT INTO acc_detail (
+	 user_id,
+	 acc_no,
+	 bouns_source,
+	 rela_userid,
+	 rela_userlevel,
+	 amnt,
+	 caldate,
+	 cntflag,
+	 `status`,
+	 syscode,
+	 bsrate,
+     otherno,
+	 other_amnt,
+	 other_source,
+	 create_time,
+	 modify_time,
+	 operator
+	 ) 
+	 select 
+	 t.user_id,
+	 '1001', 
+	 '10', 
+	 NULL,
+	 NULL,
+	 f.gain_point,
+	 now(),
+	 '1',
+	 #{status},
+	 #{syscode},
+	 null,
+	 t.id,
+	 null,
+	'task_excute_detail',
+	 now(),
+	 now(),
+	 #{operator}
+	 from task_excute_detail t,task_def f
+	 where t.task_id in 
+	 <foreach item="id" index="index" collection="array" open="(" separator="," close=")">  
+     #{id}  
+     </foreach>  
+	 and t.user_id=#{userId}
+	 and t.approve_status='1'
+	 and t.task_classno = f.task_classno
+	 and not EXISTS(
+	 select 1 from acc_detail a1 where a1.user_id=t.user_id
+	 and a1.otherno =t.id
+	 and a1.acc_no ='1001' and a1.bouns_source='10'
+	 ) 
+     </insert>
+     
+     
+     <insert id="addreftask" parameterType="pd" >
+     INSERT INTO acc_detail (
+	 user_id,
+	 acc_no,
+	 bouns_source,
+	 rela_userid,
+	 rela_userlevel,
+	 amnt,
+	 caldate,
+	 cntflag,
+	 `status`,
+	 syscode,
+	 bsrate,
+     otherno,
+	 other_amnt,
+	 other_source,
+	 create_time,
+	 modify_time,
+	 operator
+	 ) 
+	 select 
+	 p.user_id,
+	 '1002', 
+	 case when p.rela_level ='A' then '11'
+	      when p.rela_level ='B' then '12'
+	      when p.rela_level ='C' then '13'
+	 else '' end bouns_source,
+	 t.user_id,
+	 p.rela_level,
+	 case when p.rela_level ='A' then #{bsratea}*f.gain_point
+          when p.rela_level ='B' then #{bsrateb}*f.gain_point
+		  when p.rela_level ='C' then #{bsratec}*f.gain_point
+     else 0 end amnt,
+	 now(),
+	 '1',
+	 #{status},
+	 #{syscode},
+	 case when p.rela_level ='A' then #{bsratea}
+          when p.rela_level ='B' then #{bsrateb}
+		  when p.rela_level ='C' then #{bsratec}
+     else 0 end bsrate,
+     t.id,
+	 f.gain_point,
+	'task_excute_detail',
+	 now(),
+	 now(),
+	 #{operator}
+	 from task_excute_detail t,task_def f,user_friendship p
+	 where t.task_id in 
+	 <foreach item="id" index="index" collection="array" open="(" separator="," close=")">  
+     #{id}  
+     </foreach>  
+	 and t.user_id=#{userId}
+	 and t.approve_status='1'
+	 and t.task_classno = f.task_classno
+	 and t.user_id = p.recomuser_id
+	 and not EXISTS(
+	 select 1 from acc_detail a1 where a1.user_id=p.user_id
+	 and a1.otherno =t.id
+	 and a1.acc_no ='1002' and a1.rela_userid =p.recomuser_id
+	 )   
+     </insert>
+     
+     <update id="updateAccDetail" parameterType="com.qkl.ztysl.api.po.acc.AccDetail">
            update tb_acc_detail
            set amnt = amnt + #{amnt},
                caldate = now(),
@@ -122,7 +260,7 @@
      <select id="findAccDetailList" parameterType="pd" resultType="pd">
         
      </select>
-     <select id="findAccDetail" parameterType="com.qkl.tfcc.api.po.acc.AccDetail" resultType="com.qkl.tfcc.api.po.acc.AccDetail">
+     <select id="findAccDetail" parameterType="com.qkl.ztysl.api.po.acc.AccDetail" resultType="com.qkl.ztysl.api.po.acc.AccDetail">
         select * from tb_acc_detail 
         where user_code = #{userCode} 
             and rela_usercode = #{relaUsercode}

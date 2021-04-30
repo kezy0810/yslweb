@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">  
+<configuration>  
+    <settings>  
+        <!-- 这个配置使全局的映射器启用或禁用缓存 -->  
+        <setting name="cacheEnabled" value="true" />  
+        <!-- 允许 JDBC 支持生成的键。需要适合的驱动。如果设置为 true 则这个设置强制生成的键被使用，尽管一些驱动拒绝兼容但仍然有效（比如 Derby） -->  
+        <setting name="useGeneratedKeys" value="true" />  
+        <!-- 配置默认的执行器。SIMPLE 执行器没有什么特别之处。REUSE 执行器重用预处理语句。BATCH 执行器重用语句和批量更新  -->  
+        <setting name="defaultExecutorType" value="REUSE" />  
+        <!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载。 -->  
+        <setting name="lazyLoadingEnabled" value="true"/>  
+        <!-- 设置超时时间，它决定驱动等待一个数据库响应的时间。  -->  
+        <setting name="defaultStatementTimeout" value="25000"/>   
+    </settings>  
+      
+    <!-- 别名配置 -->  
+    <typeAliases>  
+		<typeAlias alias="TestUser" type="com.qkl.ztysl.api.po.TestUser" />
+		<typeAlias alias="User" type="com.qkl.ztysl.api.po.user.User" />
+		<typeAlias alias="UserDetail" type="com.qkl.ztysl.api.po.user.UserDetail" />
+		<typeAlias alias="UserFriendship" type="com.qkl.ztysl.api.po.user.UserFriendship" />
+		<typeAlias alias="Sendsms" type="com.qkl.ztysl.api.po.user.Sendsms" />
+		<typeAlias alias="SendsmsDetail" type="com.qkl.ztysl.api.po.user.SendsmsDetail" />
+		<typeAlias alias="SysMaxnum" type="com.qkl.ztysl.api.po.sys.SysMaxnum" />
+		<typeAlias alias="SysGencode" type="com.qkl.ztysl.api.po.sys.SysGencode" />
+		<typeAlias alias="AccInfo" type="com.qkl.ztysl.api.po.acc.AccInfo" />
+		<typeAlias alias="AccDetail" type="com.qkl.ztysl.api.po.acc.AccDetail" />
+		<typeAlias alias="ComTeamVip" type="com.qkl.ztysl.api.po.user.ComTeamVip" />
+		<typeAlias alias="ComAccMy" type="com.qkl.ztysl.api.po.acc.ComAccMy" />
+		<typeAlias alias="CorpTeam" type="com.qkl.ztysl.api.po.user.CorpTeam" />
+		<typeAlias alias="Bankacc" type="com.qkl.ztysl.api.po.acc.BankAccInfo" />
+		<typeAlias alias="pd" type="com.qkl.util.help.pager.PageData" />
+		<typeAlias alias="TradeDetail" type="com.qkl.ztysl.api.po.trade.TradeDetail" />
+		<typeAlias alias="UnfreezeDetail" type="com.qkl.ztysl.api.po.trade.UnfreezeDetail" />
+		<typeAlias alias="AccOutdetail" type="com.qkl.ztysl.api.po.acc.AccOutdetail" />
+		<typeAlias alias="UserLevelcnt" type="com.qkl.ztysl.api.po.user.UserLevelcnt" />
+		<typeAlias alias="AccLimitdef" type="com.qkl.ztysl.api.po.acc.AccLimitdef" />
+		<typeAlias alias="InterfaceLog" type="com.qkl.ztysl.api.po.log.InterfaceLog" />
+		
+		
+		<typeAlias type="com.qkl.ztysl.api.entity.Page" alias="Page"/>
+		<!-- typeAlias alias="SourceBean" type="com.qkl.ztysl.api.po.SourceBean" />
+		<typeAlias alias="DataListBean" type="com.qkl.ztysl.api.po.DataListBean" />
+		<typeAlias alias="EzbCustomerInfoBean" type="com.qkl.ztysl.api.po.EzbCustomerInfoBean" />
+		<typeAlias alias="EzbDepPerformBean" type="com.qkl.ztysl.api.po.EzbDepPerformBean" />
+		<typeAlias alias="EzbDepScoreBean" type="com.qkl.ztysl.api.po.EzbDepScoreBean" />
+		<typeAlias alias="EzbInvestBean" type="com.qkl.ztysl.api.po.EzbInvestBean" />
+		<typeAlias alias="EzbInvestDetbBean" type="com.qkl.ztysl.api.po.EzbInvestDetbBean" />
+		<typeAlias alias="EzbSectionPerformBean" type="com.qkl.ztysl.api.po.EzbSectionPerformBean" />
+		<typeAlias alias="EzbSectionScoreBean" type="com.qkl.ztysl.api.po.EzbSectionScoreBean" />
+		<typeAlias alias="YsEmployeeBean" type="com.qkl.ztysl.api.po.YsEmployeeBean" /> -->
+    </typeAliases>
+    
+    <plugins>
+        <plugin interceptor="com.qkl.ztysl.provider.plugin.PagePlugin">
+            <property name="dialect" value="mysql"/>
+            <property name="pageSqlId" value=".*listPage.*"/>
+        </plugin>
+    </plugins>
+    <!-- 指定映射器路径 -->  
+    <mappers>  
+		<mapper resource="modelMapper/TestUser.xml"/>
+		<mapper resource="modelMapper/User.xml"/>
+		<mapper resource="modelMapper/UserDetail.xml"/>
+		<mapper resource="modelMapper/UserFriendship.xml"/>
+		<mapper resource="modelMapper/SmsSend.xml"/>
+		<mapper resource="modelMapper/SendsmsDetail.xml"/>
+		<mapper resource="modelMapper/SysMaxnum.xml"/>
+		<mapper resource="modelMapper/SysGencode.xml"/>
+		<mapper resource="modelMapper/AccDetail.xml"/>
+		<mapper resource="modelMapper/AccInfo.xml"/>
+		<mapper resource="modelMapper/ComTeamVip.xml"/>
+		<mapper resource="modelMapper/ComAccMy.xml"/>
+		<mapper resource="modelMapper/LPmemberTeam.xml"/>
+		<mapper resource="modelMapper/LPacc.xml"/>
+		<mapper resource="modelMapper/CorpTeam.xml"/>
+		<mapper resource="modelMapper/Bankacc.xml"/>
+		<mapper resource="modelMapper/TradeDetail.xml"/>
+		<mapper resource="modelMapper/UnfreezeDetail.xml"/>
+		<mapper resource="modelMapper/AccOutdetail.xml"/>
+		<mapper resource="modelMapper/UserLevelcnt.xml"/>
+		<mapper resource="modelMapper/LogSms.xml"/>
+		<mapper resource="modelMapper/AccLimitdef.xml"/>
+		<mapper resource="modelMapper/InterfaceLog.xml"/>
+
+		
+		<!-- mapper resource="modelMapper/SourceBean.xml"/>
+		<mapper resource="modelMapper/DataListBean.xml"/>
+		<mapper resource="modelMapper/EzbCustomerInfoBean.xml"/>
+		<mapper resource="modelMapper/EzbDepPerformBean.xml"/>
+		<mapper resource="modelMapper/EzbDepScoreBean.xml"/>
+		<mapper resource="modelMapper/EzbInvestBean.xml"/>
+		<mapper resource="modelMapper/EzbInvestDetbBean.xml"/>
+		<mapper resource="modelMapper/EzbSectionPerformBean.xml"/>
+		<mapper resource="modelMapper/EzbSectionScoreBean.xml"/>
+		<mapper resource="modelMapper/YsEmployeeBean.xml"/> -->
+		
+    </mappers> 
+</configuration>  

@@ -17,7 +17,7 @@
  		from  tb_member_limit  where user_code =#{userCode} 
 	</select> 
    
-	<insert id="add" parameterType="com.qkl.tfcc.api.po.acc.MemberLimit" >
+	<insert id="add" parameterType="com.qkl.ztysl.api.po.acc.MemberLimit" >
 	 insert into tb_member_limit ( 
 	 user_code,
 	 rela_usercode,

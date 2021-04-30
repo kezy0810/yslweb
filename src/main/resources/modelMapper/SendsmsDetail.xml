@@ -15,7 +15,7 @@
          LIMIT 0,1
 	</select> 
 	
-	 <insert id="add" parameterType="com.qkl.tfcc.api.po.user.SendsmsDetail" >
+	 <insert id="add" parameterType="com.qkl.ztysl.api.po.user.SendsmsDetail" >
 	 insert into tb_sendsms_detail (phone,vcode,sys_code,send_time)
 	 values(
 	 #{phone},

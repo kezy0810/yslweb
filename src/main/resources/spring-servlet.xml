@@ -25,7 +25,7 @@
 	<mvc:annotation-driven />
 	
 
-	<context:component-scan base-package="com.qkl.tfcc.controller">
+	<context:component-scan base-package="com.qkl.ymd.controller">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
@@ -46,7 +46,7 @@
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 		 <mvc:interceptor>
             <mvc:mapping path="/**" />
-            <bean class="com.qkl.tfcc.intercept.AuthorizationInterceptor">
+            <bean class="com.qkl.ztysl.intercept.AuthorizationInterceptor">
                 <property name="allowUrls">
                     <list>
                         <!-- 如果请求中包含以下路径，则不进行拦截 -->
@@ -65,6 +65,8 @@
                         <value>/isExistPhone</value>
                         <value>/forgetpwd</value>
                         <value>/transfer</value>
+                        <value>/mserver/mapp</value>    
+                        <value>/appRedisDemo</value>                    
                     </list>
                 </property>
             </bean>
@@ -86,7 +88,7 @@
 
 	<!-- 处理JSON数据转换的 -->
 	<bean id="mappingJacksonHttpMessageConverter"
-		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 		<!-- 为了处理返回的JSON数据的编码，默认是ISO-88859-1的，这里把它设置为UTF-8,解决有乱码的情况 -->
 		<property name="supportedMediaTypes">
 			<list>

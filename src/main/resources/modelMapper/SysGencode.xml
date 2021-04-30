@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
     <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="SysGencode">
-    <resultMap id="BaseResultMap" type="com.qkl.tfcc.api.po.user.User" >
+    <resultMap id="BaseResultMap" type="com.qkl.ztysl.api.po.user.User" >
 	    <id column="id" property="id" jdbcType="BIGINT" />
 	    <result column="user_code" property="userCode" jdbcType="VARCHAR" />
 	    <result column="phone" property="phone" jdbcType="VARCHAR" />
@@ -28,7 +28,7 @@
 		b.code_name codeName,
 		b.description description,
 		b.readonly readonly
-		from t_code_group a ,t_general_code b 
+		from system_code_group a ,system_general_code b 
         where a.id = b.group_id
 	</select> 
 	
@@ -42,7 +42,7 @@
 		b.code_name codeName,
 		b.description description,
 		b.readonly readonly
-		from t_code_group a ,t_general_code b 
+		from system_code_group a ,system_general_code b 
         where a.id = b.group_id 
         and a.group_code =#{groupcode}  
      </select>

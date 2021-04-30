@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
     <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UnfreezeDetail">
-    <resultMap id="UnfreezeDetailResultMap" type="com.qkl.tfcc.api.po.trade.UnfreezeDetail" >
+    <resultMap id="UnfreezeDetailResultMap" type="com.qkl.ztysl.api.po.trade.UnfreezeDetail" >
 	    <id column="id" property="id" />
 	    <result column="user_code" property="userCode" />
 	    <result column="beforeuf_num" property="beforeufNum" />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
     <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="SysMaxnum">
-<!--resultMap id="BaseResultMap" type="com.qkl.tfcc.api.po.user.User" >
+<!--resultMap id="BaseResultMap" type="com.qkl.ztysl.api.po.user.User" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_code" property="userCode" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
@@ -23,13 +23,13 @@
     <select id="find" parameterType="java.lang.String" resultType="SysMaxnum" >
 		select 
 		version,code,notype
-        from tb_sys_maxnum  where notype = #{notype}
+        from system_maxnum  where notype = #{notype}
 	</select> 
 	
 	
 	
-	  <update id="update" parameterType="com.qkl.tfcc.api.po.sys.SysMaxnum" >    
-	     update tb_sys_maxnum 
+	  <update id="update" parameterType="com.qkl.ztysl.api.po.sys.SysMaxnum" >    
+	     update system_maxnum 
 	     set code = #{code}
 	     where  notype = #{notype}    
      </update>

@@ -15,7 +15,7 @@
 	
 	
 	
-	 <insert id="add" parameterType="com.qkl.tfcc.api.po.user.Sendsms" >
+	 <insert id="add" parameterType="com.qkl.ztysl.api.po.user.Sendsms" >
 	 insert into tb_sendsms (user_code,phone,sendsms_count,send_time,locked_time)
 	 values(
 	 #{userCode},
@@ -26,7 +26,7 @@
 	 )	 
 	 </insert>
 	 
-	 <update id="update" parameterType="com.qkl.tfcc.api.po.user.Sendsms" >
+	 <update id="update" parameterType="com.qkl.ztysl.api.po.user.Sendsms" >
       update tb_sendsms
       set 
       user_code = #{userCode},

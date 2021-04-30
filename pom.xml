@@ -1,16 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.qkl.tfcc.api.web</groupId>
-  <artifactId>qkl_tfcc_web</artifactId>
+  <groupId>com.qkl.ztysl.api.web</groupId>
+  <artifactId>qkl_ztysl_web</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>qkl_tfcc_web</name>
+  <name>qkl_ztysl_web</name>
 	
 	
 	
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>3.2.5.RELEASE</spring.version>
+		<!-- spring.version>3.2.5.RELEASE</spring.version> -->
+		<spring.version>4.3.7.RELEASE</spring.version>
 		<jackson.version>1.9.2</jackson.version>
 		<quartz.version>2.2.1</quartz.version>
 	</properties>
@@ -42,14 +43,14 @@
 		
 	
 	   <dependency>		
-			<groupId>com.qkl.tfcc</groupId>
-			<artifactId>qkl_tfcc_api</artifactId>
+			<groupId>com.qkl.ztysl</groupId>
+			<artifactId>qkl_ztysl_api</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		
 		<!--  dependency>		
-			<groupId>com.qkl.tfcc</groupId>
-			<artifactId>qkl_tfcc_provider</artifactId>
+			<groupId>com.qkl.ymd</groupId>
+			<artifactId>qkl_ymd_provider</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>-->
 	
@@ -166,7 +167,12 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
-			<version>1.0.2.RELEASE</version>
+			<version>1.7.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>2.4.2</version>
 		</dependency>
 		<!-- sitemesh -->
 		<dependency>
@@ -202,6 +208,27 @@
 			<artifactId>jackson-xc</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
+		<dependency>
+           <groupId>com.fasterxml.jackson.core</groupId>
+           <artifactId>jackson-annotations</artifactId>
+           <version>2.8.4</version>
+       </dependency>
+       <dependency>
+           <groupId>com.fasterxml.jackson.core</groupId>
+           <artifactId>jackson-core</artifactId>
+           <version>2.8.4</version>
+       </dependency>
+       <dependency>
+           <groupId>com.fasterxml.jackson.core</groupId>
+           <artifactId>jackson-databind</artifactId>
+           <version>2.8.4</version>
+       </dependency>
+       <dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20180130</version>
+		</dependency>
+		
 
 		<!-- j2ee web spec -->
 		<dependency>
@@ -332,7 +359,7 @@
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-			<version>2.1.0</version>
+			<version>2.8.1</version>
 		</dependency>
 		<!-- httpclient -->
 		<dependency>
@@ -413,6 +440,7 @@
 			<version>1.5.0</version>
 		</dependency>
 
+
 	</dependencies>
 	<!-- compile -->
 	<build>
@@ -433,6 +461,7 @@
 				<!-- <warName>${project.artifactId}</warName> -->
 				<!-- </configuration> -->
 				<configuration>
+				   <failOnMissingWebXml>false</failOnMissingWebXml>
 					<webResources>
 						<resource>
 							<directory>WebContent</directory>
@@ -445,8 +474,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					 
 					<webResources>
 						<resource>
@@ -542,7 +571,7 @@
 				<!--日志存储路径，多个项目可以用同一个路径，在该路径下每个项目会自动创建以项目名称命名的子文件夹 -->
 				<log4j.path>d:/log</log4j.path>
 				<!--dubbo注册中心的地址 -->
-				<dubbo.application.name>qkl_tfcc_web</dubbo.application.name>
+				<dubbo.application.name>qkl_ymd_web</dubbo.application.name>
 				<dubbo.protocol.name>dubbo</dubbo.protocol.name>
 				<dubbo.registry.address>zookeeper://127.0.0.1:2181?client=zkclient</dubbo.registry.address>
 				<jdbc.url>
@@ -550,9 +579,9 @@
 					jdbc:mysql://192.168.159.128:3306/tfcc?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf8
 				</jdbc.url>
 				<!-- 数据库访问帐号 -->
-				<jdbc.username>tfcc</jdbc.username>
+				<jdbc.username>ymd</jdbc.username>
 				<!-- 数据库访问密码 -->
-				<jdbc.password>tfcc</jdbc.password>
+				<jdbc.password>ymd</jdbc.password>
 				
 				
 			</properties>
@@ -578,7 +607,7 @@
 				<!--日志存储路径，多个项目可以用同一个路径，在该路径下每个项目会自动创建以项目名称命名的子文件夹 -->
 				<log4j.path>/home/project/</log4j.path>
 				<!--dubbo注册中心的地址 -->
-				<dubbo.application.name>qkl_tfcc_web</dubbo.application.name>
+				<dubbo.application.name>qkl_ymd_web</dubbo.application.name>
 				<dubbo.protocol.name>dubbo</dubbo.protocol.name>
 				<dubbo.registry.address>${qa_zookeeper_address}</dubbo.registry.address>
 			</properties>
@@ -604,7 +633,7 @@
 				<!--日志存储路径，多个项目可以用同一个路径，在该路径下每个项目会自动创建以项目名称命名的子文件夹 -->
 				<log4j.path>/home/project/</log4j.path>
 				<!--dubbo注册中心的地址 -->
-				<dubbo.application.name>qkl_tfcc_web</dubbo.application.name>
+				<dubbo.application.name>qkl_ymd_web</dubbo.application.name>
 				<dubbo.protocol.name>dubbo</dubbo.protocol.name>
 				<dubbo.registry.address>${online_zookeeper_address}</dubbo.registry.address>
 			</properties>

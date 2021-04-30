@@ -1,104 +1,110 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
     <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserDetail">
-    <resultMap id="userDetailResultMap" type="com.qkl.tfcc.api.po.user.UserDetail" >
+    <resultMap id="userDetailResultMap" type="com.qkl.ztysl.api.po.user.UserDetail" >
 	    <id column="id" property="id" />
-	    <result column="user_code" property="userCode" />
-	    <result column="phone" property="phone" />
+	    <result column="user_name" property="userName" />
+	    <result column="user_type" property="userType"/>    
+	    <result column="trans_password" property="transPassword"/>    
+   	    <result column="reg_time" property="regTime"/>
+	    <result column="mobile_phone" property="mobilePhone"/>    
 	    <result column="real_name" property="realName" />
 	    <result column="idno" property="idno" />
-	    <result column="crop_name" property="cropName" />
-	    <result column="crop_person" property="cropPerson" />
-	    <result column="branch_name" property="branchName"/>
-	    <result column="wxnum" property="wxnum" />
-	    <result column="bankaccno" property="bankaccno"/>
-	    <result column="mail_addrss" property="mailAddrss"/>
-	    <result column="zip_code" property="zipCode" />
-	    <result column="ref_phone" property="refPhone" />
-	    <result column="img_addrss" property="imgAddrss" />
+	    <result column="wx_accno" property="wxAccno" />
+	    <result column="alipay_accno" property="alipayAccno" />
+   	    <result column="address_msg" property="addressMsg"/>	    
+   	    <result column="ref_code" property="refCode"/>	    
+   	    <result column="parent_refcode" property="parentRefcode"/>		
+   	    <result column="parent_username" property="parentUsername"/>		        
 	    <result column="qr_code" property="qrCode"/>      
-	    <result column="freeze_flag" property="freezeFlag"/> 
-	    <result column="buy_flag" property="buyFlag"/>
-	    <result column="user_type" property="userType"/>    
+	    <result column="status" property="status" />
+	    <result column="real_stat" property="realStat" />
 	    <result column="create_time" property="createTime"/>    
 	    <result column="modify_time" property="modifyTime"/>    
 	    <result column="operator" property="operator"/>    
+	    <result column="r1" property="r1"/> 
+	    <result column="r2" property="r2"/> 
+	    <result column="r3" property="r3"/> 
+	    <result column="r4" property="r4"/> 
+	    <result column="r5" property="r5"/> 
+	    
     </resultMap>
 
      <!-- 通用查询结果列-->
     <sql id="Base_Column_List">
-         id,user_code,user_name,phone,real_name,idno,crop_name,crop_person,branch_name,wxnum,bankaccno,mail_addrss,zip_code,ref_phone,
-         img_addrss,qr_code,user_type,real_stat,freeze_flag,buy_flag,create_time,modify_time,operator
+         id,user_type,user_name,trans_password,reg_time,mobile_phone,real_name,idno,
+		 wx_accno,alipay_accno,address_msg,ref_code,parent_username,parent_refcode,qr_code,`status`,real_stat,
+		 r1,r2,r3,r4,r5,create_time,modify_time,operator
     </sql>
       
        <select id="findIsExist" parameterType="java.lang.String" resultType="java.lang.Integer" >
 		select count(1) cnt
-        from tb_user_detail  where phone = #{phone} 
+        from users_details  where user_name = #{userName} 
 	   </select> 
 	   <select id="findById" parameterType="java.lang.Integer" resultMap="userDetailResultMap" >
-	        select 
-	         user_code userCode,
-	         phone phone,
+	         select 
+	         id id,
+	         user_name userName,
 	         real_name realName,
 	         idno idno,
-	         crop_name cropName,
-	         crop_person cropPerson,
-	         branch_name branchName,
-	         ref_phone refPhone,
+	         trans_password transPassword,
+	         ref_code refCode,
 	         qr_code qrCode,
 	         user_type userType,
 	         real_stat realStat,
-	         freeze_flag freezeFlag,
-	         buy_flag buyFlag,
 	         create_time createTime,
 	         modify_time modifyTime,
 	         operator  operator
-	        from tb_user_detail  where id = #{id}
+	        from users_details  where id = #{id}
       </select>
 	  <select id="findByPhone" parameterType="java.lang.String" resultMap="userDetailResultMap" >
 		select 
 		 <include refid="Base_Column_List" />
-        from tb_user_detail  where phone = #{phone}
+        from users_details  where phone = #{phone}
 	</select>
+	
+	<select id="findByUserName" parameterType="java.lang.String" resultMap="userDetailResultMap" >
+		select 
+		 <include refid="Base_Column_List" />
+        from users_details  where user_name = #{userName}
+	</select>
+	
+	<select id="findByRefcode" parameterType="java.lang.String" resultMap="userDetailResultMap" >
+		select 
+		 <include refid="Base_Column_List" />
+        from users_details  where ref_code = #{refCode}
+	</select>
+	
+	
 	<select id="findByUserCode" parameterType="java.lang.String" resultMap="userDetailResultMap" >
         select 
          <include refid="Base_Column_List" />
-        from tb_user_detail  where user_code = #{userCode}
+        from users_details  where user_code = #{userCode}
     </select>
 	
 	
-	<insert id="add" parameterType="com.qkl.tfcc.api.po.user.UserDetail" >
-	 insert into tb_user_detail ( 
-	 user_code,
-	 phone,
-	 real_name,
-	 idno,
-	 crop_name,
-	 crop_person,
-	 branch_name,
-	 ref_phone,
-	 qr_code,
+	<insert id="add" parameterType="com.qkl.ztysl.api.po.user.UserDetail" >
+	 insert into users_details ( 
+	 user_name,
 	 user_type,
-	 real_stat,
-	 freeze_flag,
-	 buy_flag,
+	 trans_password,
+	 reg_time,
+	 ref_code,
+	 parent_username,
+	 parent_refcode,
+	 status,
 	 create_time,
 	 modify_time,
 	 operator)
 	 values(
-	 #{userCode},
-	 #{phone},
-	 #{realName},
-	 #{idno},
-	 #{cropName},
-	 #{cropPerson},
-	 #{branchName},
-	 #{refPhone},
-	 #{qrCode},
+	 #{userName},
 	 #{userType},
-	 #{realStat},
-	 #{freezeFlag},
-	 #{buyFlag},	 
+	 #{transPassword},
+	 #{regTime},
+	 #{refCode},
+	 #{parentUsername},
+	 #{parentRefcode},
+	 #{status},
 	 #{createTime},
 	 #{modifyTime},
 	 #{operator}
@@ -107,14 +113,14 @@
 	
 	
 	<update id="updatephone" parameterType="java.util.Map" >    
-	     update tb_user_detail 
+	     update users_details 
 	     set phone = #{phone},
 	         modify_time = #{modify_time}
 	     where user_code = #{usercode}     
      </update>
      
      <update id="updatereal" parameterType="java.util.Map" >    
-	     update tb_user_detail 
+	     update users_details 
 	     set real_name = #{realname},
 	         idno = #{idno},
 	         real_stat = #{realstat},
@@ -122,44 +128,30 @@
 	     where phone = #{phone}     
      </update>
      <update id="updateHeadPic" parameterType="java.util.Map">    
-	     update tb_user_detail 
+	     update users_details 
 	     set img_addrss = #{img_addrss}
 	     where user_code = #{user_code}     
      </update>
 	 <update id="updateUserDetail" parameterType="UserDetail">    
-         update tb_user_detail 
+         update users_details 
          <set> 
                 real_name = #{realName},
-                idno = #{idno},
-                wxnum = #{wxnum},
-                bankaccno = #{bankaccno},
-                mail_addrss = #{mailAddrss},
-                zip_code = #{zipCode},
+                alipay_accno = #{alipayAccno},
+                real_stat=#{realStat},
                 modify_time = now(),
            <if test="operator != null and operator != ''">
                 operator = #{operator}
            </if>     
          </set>
-         where user_code = #{userCode}     
+         where id = #{id}     
      </update>
     <update id="updateUserDetailCore" parameterType="UserDetail">    
-         update tb_user_detail 
+         update users_details 
          <set> 
            <if test="realName != null and realName != ''">
                 real_name = #{realName},
            </if>
-           <if test="phone != null and phone != ''">
-                phone = #{phone},
-           </if>
-           <if test="cropName != null and cropName != ''">
-                crop_name = #{cropName},
-           </if>
-           <if test="cropPerson != null and cropPerson != ''">
-                crop_person = #{cropPerson},
-           </if>
-           <if test="branchName != null and branchName != ''">
-                branch_name = #{branchName},
-           </if>
+
                 modify_time = now(),
            <if test="operator != null and operator != ''">
                 operator = #{operator}
@@ -168,14 +160,22 @@
          where user_code = #{userCode}     
      </update>
     <update id="updateRefPhone" parameterType="pd">    
-         update tb_user_detail 
+         update users_details 
          set   ref_phone = #{new_ref_phone}
          where ref_phone = #{ref_phone}     
      </update>
      <!-- 修改冻结标志 -->
      <update id="updateFreezeFlag" parameterType="pd">    
-         update tb_user_detail 
+         update users_details 
          set   freeze_flag = #{freeze_flag}
          where phone = #{phone}     
      </update>
+     
+      <update id="updatepwd" parameterType="java.util.Map" >    
+	     update users_details 
+	     set trans_password = #{transPassword},
+	          modify_time = #{modify_time}
+	     where id = #{id}     
+     </update>
+     
 </mapper>     

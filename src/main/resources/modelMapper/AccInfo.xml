@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AccInfo">
+    <resultMap id="BaseResultMap" type="com.qkl.ztysl.api.po.acc.AccInfo" >
+	    <id column="id" property="id" jdbcType="BIGINT" />
+	    <result column="user_id" property="userId" jdbcType="BIGINT" />
+	    <result column="total_amnt" property="totalAmnt" jdbcType="DECIMAL" />
+	    <result column="avb_amnt" property="avbAmnt" jdbcType="DECIMAL" />	    
+	    <result column="handle_amnt" property="handleAmnt" jdbcType="DECIMAL" />
+	    <result column="last_caldate" property="lastCaldate" jdbcType="TIMESTAMP" />
+	    <result column="syscode" property="syscode" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+	    <result column="operator" property="operator" jdbcType="VARCHAR" />
+	 </resultMap>
+  
+    <!--查询可用积分余额 -->
+	<select id="getAvailableBalance" parameterType="com.qkl.ztysl.api.po.acc.AccInfo" resultType="java.lang.Integer">
+	       select total_amnt from acc_info where user_id = #{userId} 
+	</select>
+	
+	<insert id="addAcc" parameterType="com.qkl.ztysl.api.po.acc.AccInfo" >
+	 insert into acc_info (
+	 user_id,
+	 total_amnt,
+	 avb_amnt,
+	 handle_amnt,
+	 last_caldate,
+	 syscode,
+	 create_time,
+	 modify_time,
+	 operator)
+	 values(
+	 #{userId},
+	 #{totalAmnt},
+	 #{avbAmnt},
+	 #{handleAmnt},
+	 #{lastCaldate},
+	 #{syscode},
+	 #{createTime},
+	 #{modifyTime},
+	 #{operator}
+	 )	 
+	 </insert>
+	 
+	 <insert id="addlv" parameterType="pd" >
+	 insert into acc_info(
+	 user_id,	 
+	 total_amnt,
+	 avb_amnt,
+	 handle_amnt,
+	 last_caldate,
+	 syscode,
+	 create_time,
+	 modify_time,
+	 operator,
+	 version_id
+	 )
+	 select
+	 c.user_code,
+	 case when b.freeze_flag ='0' then 0 
+	     when b.freeze_flag ='1' then c.amnt else c.amnt end avb_amnt,
+	 case when b.freeze_flag ='0' then c.amnt 
+	     when b.freeze_flag ='1' then 0 else 0 end froze_amnt,
+	 c.amnt,
+	 now(),
+	 #{syscode},
+	 now(),
+	 now(),
+	 #{operator},
+	 #{versionId}	 
+	 from users_details b ,acc_detail c
+	 where 1=1
+	 and b.user_code = c.user_code
+	 and c.cntflag ='0'
+	 and c.rela_usercode= #{relaUsercode}
+	 and c.syscode = #{syscode}
+	 and  not EXISTS(
+	 select 1 from acc_info d  
+	 where d.user_code =c.user_code
+	)
+	; 
+	 </insert>
+	 
+	 
+	  <update id="updatelv" parameterType="pd">    
+         update acc_info a,acc_info_detail b,tb_user_detail d
+		set a.avb_amnt =a.avb_amnt + ( case when d.freeze_flag ='0' then 0 else b.amnt end ),
+		    a.froze_amnt= a.froze_amnt + (case when d.freeze_flag ='0' then b.amnt else 0 end ),
+		    a.total_amnt = a.total_amnt+b.amnt,
+		    a.last_caldate = now(),
+			a.modify_time = now(),
+			b.cntflag ='1'
+		where a.user_code = b.user_code
+		and a.user_code = d.user_code
+		
+		and b.cntflag='0'
+		and b.syscode =#{syscode}	
+		and b.rela_usercode =#{relaUsercode}		
+     </update>
+	 
+<!-- 	 获取奖励 -->
+	 <update id="updateIn" parameterType="com.qkl.ztysl.api.po.acc.AccInfo">    
+         update acc_info 
+         <set> 
+                froze_amnt = froze_amnt + #{frozeAmnt},
+                total_amnt = total_amnt + #{totalAmnt},
+                last_caldate = now(),
+                modify_time = now(),
+           <if test="operator != null and operator != ''">
+                operator = #{operator}
+           </if>     
+         </set>
+         where user_code = #{userCode}     
+               and syscode = #{syscode}
+     </update>
+<!--      发放奖励 -->
+     <update id="updateOut" parameterType="com.qkl.ztysl.api.po.acc.AccInfo">    
+         update acc_info 
+         <set> 
+                avb_amnt = avb_amnt - #{avbAmnt},
+                total_amnt = total_amnt - #{totalAmnt},
+                last_caldate = now(),
+                modify_time = now(),
+           <if test="operator != null and operator != ''">
+                operator = #{operator}
+           </if>     
+         </set>
+          where user_code = #{userCode}     
+               and syscode = #{syscode}
+     </update>
+<!--      发放奖励 -->
+     <update id="updatefroze" parameterType="pd">    
+        update acc_info a,tb_unfreeze_detail b,tb_user c
+         <set> 
+                a.avb_amnt = a.avb_amnt +b.unfreeze_num,
+   			  a.froze_amnt = a.froze_amnt - b.unfreeze_num,
+                a.last_caldate = now(),
+                a.modify_time = now(),
+           <if test="operator != null and operator != ''">
+                operator = #{operator}
+           </if>     
+         </set>
+         where a.user_code =b.user_code     
+               and a.syscode = b.syscode
+               and a.user_code = c.user_code
+               and c.user_type =#{userType}
+               and b.syscode = #{syscode}
+               and b.status ='0'
+     </update>     
+     
+     
+     <select id="findAcc" parameterType="pd" resultMap="BaseResultMap">
+           select  
+           user_id userId,
+		   ifnull(total_amnt,0) TotalAmnt,
+		   ifnull(avb_amnt,0) avbAmnt,
+		   ifnull(handle_amnt,0) handleAmnt,
+		   last_caldate,
+		   syscode,
+		   create_time,
+		   modify_time,
+		   operator
+           from acc_info 
+           where 1=1
+           and  user_id = #{userId} 
+          
+           <if test="syscode != null and syscode !='' ">
+                and syscode = #{syscode} 
+           </if>
+     </select>
+	 
+	<update id="thaw" parameterType="java.lang.String">
+        UPDATE acc_info t,tb_user_detail a 
+		SET t.handle_amnt = t.handle_amnt - (t.handle_amnt * #{ratio}),
+		t.avb_amnt = t.avb_amnt + (t.handle_amnt * #{ratio})
+		where  t.user_id = a.id
+		and a.freeze_flag = '0' 
+		and a.user_type = '1' 
+		and t.froze_amnt &gt;0 
+	</update>	
+    <!-- 	申请兑换  -->
+    <update id="transfering" parameterType="pd">
+        UPDATE acc_info t
+        SET 
+        t.avb_amnt = t.avb_amnt - #{exPointAmnt},
+        t.handle_amnt = ifnull(t.handle_amnt,0) + #{exPointAmnt},
+        t.modify_time = now()
+        where t.user_id = #{userId}
+        and t.avb_amnt &gt;=#{exPointAmnt}
+    </update>
+    <!--     转账成功 -->
+    <update id="transferSuccess" parameterType="pd">
+        UPDATE acc_info t
+        SET t.handle_amnt = t.handle_amnt - #{value},
+        t.total_amnt = t.total_amnt - #{value},
+        t.modify_time = now()
+        where t.user_id = #{userId}
+        and t.froze_amnt_out &gt;=#{value}
+    </update>
+    <!--     转账失败 -->
+    <update id="transferfail" parameterType="pd">
+         UPDATE acc_info t
+         SET 
+         t.avb_amnt = t.avb_amnt + #{value},
+         t.handle_amnt = t.handle_amnt - #{value},
+         t.modify_time = now()
+         where t.user_id = #{userId}
+         and t.handle_amnt &gt;=#{value}
+    </update>
+</mapper>     

@@ -22,7 +22,7 @@
 	
 	<!-- 启用注解 -->
     <context:annotation-config />
-	<context:component-scan base-package="com.qkl.tfcc">
+	<context:component-scan base-package="com.qkl.ztysl">
 		<context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation" />
 	</context:component-scan>
 	<import resource="classpath:spring-quartz.xml" />
@@ -33,6 +33,7 @@
 		<property name="locations">
 			<list>
 				<value>classpath:dubbo.properties</value>
+				<value>classpath:redis.properties</value>
 			</list>
 
 		</property>
@@ -40,7 +41,8 @@
 	<!-- 因业务规则刚起步，dubbo放入后期迭代 20160813 kezy
 	<import resource="classpath:web-dubbo-config.xml" />
 	
-	<import resource="classpath:tfcc-dubbo-consumer.xml" />
+	<import resource="classpath:ymd-dubbo-consumer.xml" />
 	 -->
 	<import resource="classpath:spring-mybatis.xml"/>
-</beans>
+	<import resource="classpath:redis-config.xml"/>
+	</beans>

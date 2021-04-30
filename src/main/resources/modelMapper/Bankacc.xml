@@ -3,7 +3,7 @@
 <mapper namespace="Bankacc">
 
   
-      <select id="findByPhone" parameterType="java.lang.String" resultType="com.qkl.tfcc.api.po.acc.BankAccInfo" >
+      <select id="findByPhone" parameterType="java.lang.String" resultType="com.qkl.ztysl.api.po.acc.BankAccInfo" >
 		select  
 		org_name orgName,bankaccno bankaccno,deposit_bankname depositBankname,deposit_time depositTime,checkphone checkphone,payee_name payeeName,
 		status status,create_time createTime,modify_time modifyTime,operator operator
